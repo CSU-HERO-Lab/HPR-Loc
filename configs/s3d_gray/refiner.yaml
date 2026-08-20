@@ -1,0 +1,83 @@
+# Structured3D grayscale dense local refiner with an 11 m oriented crop.
+project_name: "hpr-loc"
+run_name: "hpr_s3d_gray_refiner_11m"
+use_wandb: true
+seed: 42
+gpu_ids: [0]
+epochs: 30
+batch_size: 16
+val_batch_size: 16
+num_workers: 4
+log_every_n_steps: 10
+precision: "32-true"
+gradient_clip_val: 1.0
+num_sanity_val_steps: 1
+
+baseline_checkpoint_path: "checkpoints/hpr_s3d_gray/diffusion/best.ckpt"
+dptv2_ckpt_path: "checkpoints/depth_anything_v2_vits.pth"
+image_encoder: "vits"
+freeze_image_backbone: true
+image_token_grid: [6, 40]
+diffusion_feature_dim: 128
+diffusion_map_feature_dim: 64
+diffusion_map_input_mode: "gray"
+diffusion_map_context_blocks: 2
+diffusion_map_pretrained: false
+diffusion_image_layers: 1
+diffusion_denoiser_layers: 2
+diffusion_num_heads: 4
+diffusion_dropout: 0.1
+diffusion_pose_fourier_bands: 4
+diffusion_train_steps: 1000
+diffusion_train_particles: 8
+diffusion_val_particles: 64
+diffusion_sample_steps: 10
+diffusion_theta_loss_weight: 1.0
+diffusion_mode_sigma_m: 0.75
+diffusion_mode_sigma_deg: 20.0
+
+refiner_arch: "dense_heatmap"
+refiner_feature_dim: 128
+refiner_map_input_mode: "gray"
+refiner_crop_size_meters: 11.0
+refiner_crop_output_size: 256
+refiner_max_delta_m: 1.5
+refiner_max_delta_theta_deg: 45.0
+refiner_map_context_blocks: 2
+refiner_num_heads: 4
+refiner_dropout: 0.1
+refiner_score_sigma_m: 0.5
+refiner_score_sigma_deg: 20.0
+refiner_delta_xy_loss_weight: 1.0
+refiner_delta_theta_loss_weight: 1.0
+refiner_score_loss_weight: 0.25
+refiner_dense_heatmap_loss_weight: 1.0
+refiner_dense_heatmap_sigma_m: 0.2
+refiner_dense_temperature: 1.0
+refiner_val_seed: 42
+
+lr: 1.0e-4
+min_lr: 1.0e-5
+weight_decay: 1.0e-4
+
+datasets:
+  dataset_type: "s3d"
+  map_res: 0.02
+  data_folder: "datasets_s3d/Structured3D"
+  data_splits: "datasets_s3d/Structured3D/split.yaml"
+  val_split: "val"
+  floorplan_img_size: [256, 256]
+  floorplan_representation: "rgb"
+  refiner_floorplan_representation: "gray"
+  refiner_oriented_crop: true
+  local_map_crop_size_meters: 5.0
+  map_pose_rot_aug:
+    enable: true
+    p: 0.5
+    angles: [90, 180, 270]
+  hard_negative:
+    mode: "none"
+  pose_aug:
+    enable: false
+
+checkpoint_dir: "checkpoints/hpr_s3d_gray/refiner"

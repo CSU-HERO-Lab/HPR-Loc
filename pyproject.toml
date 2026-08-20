@@ -1,0 +1,8 @@
+[tool.pytest.ini_options]
+pythonpath = ["."]
+
+[tool.ruff]
+exclude = ["DisCo_model/depth_anything_v2"]
+
+[tool.ruff.lint]
+select = ["E9", "F"]

@@ -1,0 +1,16 @@
+checkpoints/*
+!checkpoints/README.md
+datasets_s3d/
+datasets_zind/
+datasets_semrayloc/processed/
+logs/
+outputs/
+wandb/
+.venv/
+.idea/
+.vscode/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+*.ckpt
+*.pth
