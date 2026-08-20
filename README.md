@@ -82,15 +82,8 @@ python eval/eval_hpr_loc.py \
 The evaluator reports results after diffusion mode selection, after DisCo
 reranking, and after local refinement.
 
-## Tests
-
-```bash
-pytest -q
-ruff check .
-```
-
 ## License
 
 HPR-Loc is released under the MIT License. Vendored Depth Anything V2 and
-DINOv2 components retain their Apache-2.0 terms; see
-[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
+DINOv2 components retain their Apache-2.0 terms; the license text is included
+under `LICENSES/`.
